@@ -272,7 +272,6 @@ export default function Home() {
     setOpenProject(openProject === id ? null : id);
   };
 
-  // Section refs for fade-in
   const aboutRef = useFadeIn();
   const projectsRef = useFadeIn();
   const servicesRef = useFadeIn();
@@ -290,40 +289,218 @@ export default function Home() {
       }}
     >
       <style>{`
-        @media (max-width: 768px) {
-          .nav-links { display: none !important; }
-          .hero-section { padding: 100px 24px 60px !important; min-height: auto !important; }
-          .hero-grid { display: flex !important; flex-direction: column-reverse !important; gap: 32px !important; }
-          .hero-photo-col { display: flex !important; flex-direction: column !important; align-items: center !important; }
-          .hero-photo-wrap { width: 160px !important; height: 160px !important; aspect-ratio: 1/1 !important; border-radius: 50% !important; }
-          .hero-h1 { font-size: 36px !important; letter-spacing: -1px !important; }
-          .about-section { padding: 60px 24px !important; }
-          .about-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
-          .projects-section { padding: 60px 24px !important; }
-          .project-header-row { display: none !important; }
-          .project-row-grid { grid-template-columns: 36px 1fr 20px !important; gap: 8px !important; }
-          .project-col-cat { display: none !important; }
-          .project-col-year { display: none !important; }
-          .project-expanded-grid { grid-template-columns: 1fr !important; gap: 20px !important; }
-          .services-section { padding: 60px 24px !important; }
-          .services-grid { grid-template-columns: 1fr 1fr !important; }
-          .skills-section { padding: 60px 24px !important; }
-          .skills-row { grid-template-columns: 1fr !important; gap: 8px !important; }
-          .cert-section { padding: 60px 24px !important; }
-          .cert-row { grid-template-columns: 80px 1fr !important; gap: 10px !important; }
-          .cert-date { display: none !important; }
-          .contact-section { padding: 60px 24px !important; }
-          .contact-cards { grid-template-columns: 1fr !important; gap: 10px !important; }
-          .contact-btns { flex-direction: column !important; align-items: stretch !important; }
-          .contact-btns a { text-align: center !important; justify-content: center !important; }
-          .social-links { gap: 8px !important; }
-          .footer { padding: 20px 24px !important; flex-direction: column !important; gap: 8px !important; text-align: center !important; }
+        /* ── MOBILE RESET ── */
+        * { box-sizing: border-box; }
+
+        /* ── NAV ── */
+        .nav-links { display: flex; align-items: center; gap: 24px; }
+
+        /* ── HERO ── */
+        .hero-inner {
+          display: grid;
+          grid-template-columns: 1fr 280px;
+          gap: 80px;
+          align-items: center;
         }
+        .hero-photo-col { display: flex; flex-direction: column; gap: 20px; }
+        .hero-photo-wrap {
+          width: 100%;
+          aspect-ratio: 4/5;
+          border-radius: 16px;
+          overflow: hidden;
+          border: 0.5px solid rgba(255,255,255,0.08);
+          background: #141414;
+        }
+        .hero-stats {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          border-top: 0.5px solid rgba(255,255,255,0.06);
+          padding-top: 16px;
+        }
+
+        /* ── ABOUT ── */
+        .about-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 60px;
+          align-items: start;
+        }
+
+        /* ── PROJECTS ── */
+        .project-header-row {
+          display: grid;
+          grid-template-columns: 48px 1fr 160px 60px 24px;
+          gap: 16px;
+          padding: 0 20px 12px;
+          border-bottom: 0.5px solid rgba(255,255,255,0.06);
+          margin-bottom: 4px;
+        }
+        .project-row-btn {
+          display: grid;
+          grid-template-columns: 48px 1fr 160px 60px 24px;
+          gap: 16px;
+          padding: 20px;
+          width: 100%;
+          background: none;
+          border: none;
+          cursor: pointer;
+          text-align: left;
+          align-items: center;
+        }
+        .project-col-cat { display: block; }
+        .project-col-year { display: block; }
+        .project-expanded-inner {
+          padding: 0 20px 28px;
+          display: grid;
+          grid-template-columns: 1fr 280px;
+          gap: 40px;
+        }
+
+        /* ── SERVICES ── */
+        .services-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 0;
+          border: 0.5px solid rgba(255,255,255,0.06);
+          border-radius: 12px;
+          overflow: hidden;
+        }
+        .service-cell {
+          padding: 28px 24px;
+          transition: background 0.2s ease;
+          cursor: default;
+        }
+        .service-border-right { border-right: 0.5px solid rgba(255,255,255,0.06); }
+        .service-border-bottom { border-bottom: 0.5px solid rgba(255,255,255,0.06); }
+
+        /* ── SKILLS ── */
+        .skills-row {
+          display: grid;
+          grid-template-columns: 160px 1fr;
+          gap: 24px;
+          padding: 20px 0;
+          border-bottom: 0.5px solid rgba(255,255,255,0.05);
+          align-items: start;
+        }
+
+        /* ── CERT ── */
+        .cert-row {
+          display: grid;
+          grid-template-columns: 110px 1fr auto;
+          gap: 20px;
+          padding: 20px 0;
+          border-bottom: 0.5px solid rgba(255,255,255,0.05);
+          align-items: center;
+        }
+        .cert-date { display: block; }
+
+        /* ── CONTACT ── */
+        .contact-cards {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          gap: 12px;
+          margin-bottom: 40px;
+        }
+        .contact-btns {
+          display: flex;
+          gap: 12px;
+          justify-content: center;
+          margin-bottom: 32px;
+          flex-wrap: wrap;
+        }
+        .social-links {
+          display: flex;
+          gap: 10px;
+          justify-content: center;
+          flex-wrap: wrap;
+          margin-bottom: 16px;
+        }
+
+        /* ── FOOTER ── */
+        .footer-inner {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+
+        /* ══════════════════════════════════════
+           TABLET — 768px and below
+        ══════════════════════════════════════ */
+        @media (max-width: 768px) {
+
+          /* NAV */
+          .nav-links { display: none; }
+
+          /* HERO */
+          .hero-section { padding: 100px 24px 60px !important; min-height: auto !important; }
+          .hero-inner {
+            grid-template-columns: 1fr;
+            gap: 36px;
+          }
+          /* Photo col goes first on mobile via order */
+          .hero-photo-col { order: -1; align-items: center; }
+          .hero-photo-wrap {
+            width: 140px;
+            height: 140px;
+            aspect-ratio: 1/1;
+            border-radius: 50%;
+          }
+          .hero-stats { grid-template-columns: 1fr 1fr 1fr; }
+
+          /* ABOUT */
+          .about-section { padding: 60px 24px !important; }
+          .about-grid { grid-template-columns: 1fr; gap: 32px; }
+
+          /* PROJECTS */
+          .projects-section { padding: 60px 24px !important; }
+          .project-header-row { display: none; }
+          .project-row-btn {
+            grid-template-columns: 36px 1fr 24px;
+            gap: 10px;
+            padding: 16px 12px;
+          }
+          .project-col-cat { display: none; }
+          .project-col-year { display: none; }
+          .project-expanded-inner {
+            grid-template-columns: 1fr;
+            gap: 20px;
+            padding: 0 12px 24px;
+          }
+
+          /* SERVICES */
+          .services-section { padding: 60px 24px !important; }
+          .services-grid { grid-template-columns: 1fr 1fr; }
+          .service-border-right { border-right: none; }
+          .service-border-bottom { border-bottom: 0.5px solid rgba(255,255,255,0.06); }
+
+          /* SKILLS */
+          .skills-section { padding: 60px 24px !important; }
+          .skills-row { grid-template-columns: 1fr; gap: 10px; }
+
+          /* CERT */
+          .cert-section { padding: 60px 24px !important; }
+          .cert-row { grid-template-columns: 90px 1fr; gap: 12px; }
+          .cert-date { display: none; }
+
+          /* CONTACT */
+          .contact-section { padding: 60px 24px !important; }
+          .contact-cards { grid-template-columns: 1fr; gap: 10px; }
+          .contact-btns { flex-direction: column; align-items: stretch; }
+          .contact-btns a { text-align: center; }
+
+          /* FOOTER */
+          .footer-inner { flex-direction: column; gap: 8px; text-align: center; }
+        }
+
+        /* ══════════════════════════════════════
+           SMALL MOBILE — 480px and below
+        ══════════════════════════════════════ */
         @media (max-width: 480px) {
-          .hero-h1 { font-size: 28px !important; }
-          .services-grid { grid-template-columns: 1fr !important; }
+          .services-grid { grid-template-columns: 1fr; }
+          .hero-stats { gap: 0; }
         }
       `}</style>
+
       {/* ── NAVIGATION ── */}
       <nav
         style={{
@@ -349,7 +526,7 @@ export default function Home() {
         <span style={{ color: "#f2f2f2", fontSize: "15px", fontWeight: 400 }}>
           Shreyansh Kanoongo
         </span>
-        <div className="nav-links" style={{ display: "flex", alignItems: "center", gap: "24px" }}>
+        <div className="nav-links">
           {["About", "Projects", "Skills", "Contact"].map((item) => (
             <a
               key={item}
@@ -382,14 +559,11 @@ export default function Home() {
               transition: "all 0.2s ease",
             }}
             onMouseEnter={(e) => {
-              (e.target as HTMLElement).style.borderColor =
-                "rgba(232,213,176,0.8)";
-              (e.target as HTMLElement).style.background =
-                "rgba(232,213,176,0.05)";
+              (e.target as HTMLElement).style.borderColor = "rgba(232,213,176,0.8)";
+              (e.target as HTMLElement).style.background = "rgba(232,213,176,0.05)";
             }}
             onMouseLeave={(e) => {
-              (e.target as HTMLElement).style.borderColor =
-                "rgba(232,213,176,0.4)";
+              (e.target as HTMLElement).style.borderColor = "rgba(232,213,176,0.4)";
               (e.target as HTMLElement).style.background = "transparent";
             }}
           >
@@ -412,14 +586,7 @@ export default function Home() {
           margin: "0 auto",
         }}
       >
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 280px",
-            gap: "80px",
-            alignItems: "center",
-          }}
-        >
+        <div className="hero-inner">
           {/* Left */}
           <div>
             <p
@@ -461,9 +628,8 @@ export default function Home() {
             </div>
 
             <h1
-              className="hero-h1"
               style={{
-                fontSize: "clamp(42px, 5vw, 66px)",
+                fontSize: "clamp(36px, 5vw, 66px)",
                 fontWeight: 300,
                 letterSpacing: "-2px",
                 lineHeight: 1.1,
@@ -532,13 +698,11 @@ export default function Home() {
                   display: "inline-block",
                 }}
                 onMouseEnter={(e) => {
-                  (e.target as HTMLElement).style.borderColor =
-                    "rgba(255,255,255,0.3)";
+                  (e.target as HTMLElement).style.borderColor = "rgba(255,255,255,0.3)";
                   (e.target as HTMLElement).style.color = "#cccccc";
                 }}
                 onMouseLeave={(e) => {
-                  (e.target as HTMLElement).style.borderColor =
-                    "rgba(255,255,255,0.15)";
+                  (e.target as HTMLElement).style.borderColor = "rgba(255,255,255,0.15)";
                   (e.target as HTMLElement).style.color = "#cccccc";
                 }}
               >
@@ -548,18 +712,8 @@ export default function Home() {
           </div>
 
           {/* Right: Photo + Stats */}
-          <div className="hero-photo-col" style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-            <div
-              className="hero-photo-wrap"
-              style={{
-                width: "100%",
-                aspectRatio: "4/5",
-                borderRadius: "16px",
-                overflow: "hidden",
-                border: "0.5px solid rgba(255,255,255,0.08)",
-                background: "#141414",
-              }}
-            >
+          <div className="hero-photo-col">
+            <div className="hero-photo-wrap">
               <Image
                 src="/photo.jpg"
                 alt="Shreyansh Kanoongo"
@@ -576,14 +730,7 @@ export default function Home() {
             </div>
 
             {/* Stats */}
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr 1fr",
-                borderTop: "0.5px solid rgba(255,255,255,0.06)",
-                paddingTop: "16px",
-              }}
-            >
+            <div className="hero-stats">
               {[
                 { num: "15+", label: "Systems Built" },
                 { num: "5", label: "Certifications" },
@@ -637,7 +784,7 @@ export default function Home() {
           background: "#0f0f0f",
           borderTop: "0.5px solid rgba(255,255,255,0.06)",
           borderBottom: "0.5px solid rgba(255,255,255,0.06)",
-          padding: "80px clamp(20px, 5vw, 80px)",
+          padding: "80px clamp(24px, 5vw, 80px)",
           opacity: 0,
           transform: "translateY(20px)",
           transition: "opacity 0.6s ease, transform 0.6s ease",
@@ -671,7 +818,7 @@ export default function Home() {
                 <span key={word} style={{ display: "flex", alignItems: "center", gap: "12px" }}>
                   <span
                     style={{
-                      fontSize: "clamp(16px, 2.5vw, 22px)",
+                      fontSize: "clamp(15px, 2.5vw, 22px)",
                       fontWeight: 300,
                       color: "#ffffff",
                     }}
@@ -688,15 +835,7 @@ export default function Home() {
             )}
           </div>
 
-          <div
-            className="about-grid"
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "60px",
-              alignItems: "start",
-            }}
-          >
+          <div className="about-grid">
             <div>
               <p
                 style={{
@@ -787,7 +926,7 @@ export default function Home() {
         className="projects-section"
         ref={projectsRef}
         style={{
-          padding: "80px clamp(20px, 5vw, 80px)",
+          padding: "80px clamp(24px, 5vw, 80px)",
           maxWidth: "1200px",
           margin: "0 auto",
           opacity: 0,
@@ -829,18 +968,8 @@ export default function Home() {
           world.
         </p>
 
-        {/* Header row */}
-        <div
-          className="project-header-row"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "48px 1fr 160px 60px 24px",
-            gap: "16px",
-            padding: "0 20px 12px",
-            borderBottom: "0.5px solid rgba(255,255,255,0.06)",
-            marginBottom: "4px",
-          }}
-        >
+        {/* Header row — hidden on mobile via CSS */}
+        <div className="project-header-row">
           {["No.", "Project", "Category", "Year", ""].map((h) => (
             <span
               key={h}
@@ -870,21 +999,10 @@ export default function Home() {
                 transition: "background 0.3s ease",
               }}
             >
-              {/* Row header */}
+              {/* Row header button */}
               <button
                 onClick={() => toggleProject(project.id)}
-                style={{
-                  width: "100%",
-                  display: "grid",
-                  gridTemplateColumns: "48px 1fr 160px 60px 24px",
-                  gap: "16px",
-                  padding: "20px",
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer",
-                  textAlign: "left",
-                  alignItems: "center",
-                }}
+                className="project-row-btn"
               >
                 <span
                   style={{
@@ -917,7 +1035,7 @@ export default function Home() {
                       border: "0.5px solid",
                       borderRadius: "100px",
                       padding: "2px 8px",
-                      fontSize: "15px",
+                      fontSize: "12px",
                     }}
                     className={getBadgeStyle(project.badgeColor)}
                   >
@@ -937,10 +1055,12 @@ export default function Home() {
                     {project.badge}
                   </span>
                 </div>
-                <span style={{ color: "#777777", fontSize: "14px" }}>
+                {/* Category — hidden on mobile */}
+                <span className="project-col-cat" style={{ color: "#777777", fontSize: "14px" }}>
                   {project.tagline.split(".")[0]}
                 </span>
-                <span style={{ color: "#aaaaaa", fontSize: "14px" }}>
+                {/* Year — hidden on mobile */}
+                <span className="project-col-year" style={{ color: "#aaaaaa", fontSize: "14px" }}>
                   2026
                 </span>
                 <span
@@ -959,19 +1079,12 @@ export default function Home() {
               {/* Expanded content */}
               <div
                 style={{
-                  maxHeight: isOpen ? "600px" : "0",
+                  maxHeight: isOpen ? "800px" : "0",
                   overflow: "hidden",
                   transition: "max-height 0.35s ease",
                 }}
               >
-                <div
-                  style={{
-                    padding: "0 20px 28px",
-                    display: "grid",
-                    gridTemplateColumns: "1fr 280px",
-                    gap: "40px",
-                  }}
-                >
+                <div className="project-expanded-inner">
                   <div>
                     <p
                       style={{
@@ -1003,7 +1116,7 @@ export default function Home() {
                           style={{
                             border: "0.5px solid rgba(255,255,255,0.1)",
                             color: "#888888",
-                            fontSize: "15px",
+                            fontSize: "13px",
                             borderRadius: "100px",
                             padding: "4px 10px",
                           }}
@@ -1051,7 +1164,7 @@ export default function Home() {
           background: "#0f0f0f",
           borderTop: "0.5px solid rgba(255,255,255,0.06)",
           borderBottom: "0.5px solid rgba(255,255,255,0.06)",
-          padding: "80px clamp(20px, 5vw, 80px)",
+          padding: "80px clamp(24px, 5vw, 80px)",
         }}
       >
         <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
@@ -1078,74 +1191,66 @@ export default function Home() {
             What I can build for you.
           </h2>
 
-          <div
-            className="services-grid"
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(4, 1fr)",
-              gap: "0",
-              border: "0.5px solid rgba(255,255,255,0.06)",
-              borderRadius: "12px",
-              overflow: "hidden",
-            }}
-          >
-            {services.map((service, i) => (
-              <div
-                key={i}
-                style={{
-                  padding: "28px 24px",
-                  borderRight:
-                    (i + 1) % 4 !== 0
-                      ? "0.5px solid rgba(255,255,255,0.06)"
-                      : "none",
-                  borderBottom:
-                    i < 4
-                      ? "0.5px solid rgba(255,255,255,0.06)"
-                      : "none",
-                  transition: "background 0.2s ease",
-                  cursor: "default",
-                }}
-                onMouseEnter={(e) =>
-                  ((e.currentTarget as HTMLElement).style.background =
-                    "rgba(255,255,255,0.02)")
-                }
-                onMouseLeave={(e) =>
-                  ((e.currentTarget as HTMLElement).style.background =
-                    "transparent")
-                }
-              >
+          <div className="services-grid">
+            {services.map((service, i) => {
+              const isLastInRow4 = (i + 1) % 4 === 0;
+              const isLastInRow2 = (i + 1) % 2 === 0;
+              const isInTopHalf = i < 4;
+              return (
                 <div
+                  key={i}
+                  className={[
+                    "service-cell",
+                    !isLastInRow4 ? "service-border-right" : "",
+                    isInTopHalf ? "service-border-bottom" : "",
+                  ].join(" ")}
                   style={{
-                    color: "#e8d5b0",
-                    fontSize: "18px",
-                    marginBottom: "12px",
-                    lineHeight: 1,
+                    /* border-right on 2-col layout handled via media query override below */
+                    borderRight: !isLastInRow4 ? "0.5px solid rgba(255,255,255,0.06)" : "none",
+                    borderBottom: isInTopHalf ? "0.5px solid rgba(255,255,255,0.06)" : "none",
                   }}
+                  onMouseEnter={(e) =>
+                    ((e.currentTarget as HTMLElement).style.background =
+                      "rgba(255,255,255,0.02)")
+                  }
+                  onMouseLeave={(e) =>
+                    ((e.currentTarget as HTMLElement).style.background =
+                      "transparent")
+                  }
                 >
-                  {service.icon}
+                  <div
+                    style={{
+                      color: "#e8d5b0",
+                      fontSize: "18px",
+                      marginBottom: "12px",
+                      lineHeight: 1,
+                    }}
+                  >
+                    {service.icon}
+                  </div>
+                  <h3
+                    style={{
+                      color: "#cccccc",
+                      fontSize: "15px",
+                      fontWeight: 400,
+                      marginBottom: "8px",
+                      lineHeight: 1.4,
+                    }}
+                  >
+                    {service.title}
+                  </h3>
+                  <p
+                    style={{
+                      color: "#999999",
+                      fontSize: "13px",
+                      lineHeight: 1.7,
+                    }}
+                  >
+                    {service.description}
+                  </p>
                 </div>
-                <h3
-                  style={{
-                    color: "#cccccc",
-                    fontSize: "15px",
-                    fontWeight: 400,
-                    marginBottom: "8px",
-                    lineHeight: 1.4,
-                  }}
-                >
-                  {service.title}
-                </h3>
-                <p
-                  style={{
-                    color: "#999999",
-                    fontSize: "15px",
-                    lineHeight: 1.7,
-                  }}
-                >
-                  {service.description}
-                </p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -1156,7 +1261,7 @@ export default function Home() {
         className="skills-section"
         ref={skillsRef}
         style={{
-          padding: "80px clamp(20px, 5vw, 80px)",
+          padding: "80px clamp(24px, 5vw, 80px)",
           maxWidth: "1200px",
           margin: "0 auto",
           opacity: 0,
@@ -1187,28 +1292,13 @@ export default function Home() {
           What I work with.
         </h2>
 
-        <div
-          style={{
-            borderTop: "0.5px solid rgba(255,255,255,0.05)",
-          }}
-        >
+        <div style={{ borderTop: "0.5px solid rgba(255,255,255,0.05)" }}>
           {Object.entries(skills).map(([category, items]) => (
-            <div
-              key={category}
-              className="skills-row"
-              style={{
-                display: "grid",
-                gridTemplateColumns: "160px 1fr",
-                gap: "24px",
-                padding: "20px 0",
-                borderBottom: "0.5px solid rgba(255,255,255,0.05)",
-                alignItems: "start",
-              }}
-            >
+            <div key={category} className="skills-row">
               <span
                 style={{
                   color: "#aaaaaa",
-                  fontSize: "15px",
+                  fontSize: "12px",
                   letterSpacing: "3px",
                   textTransform: "uppercase",
                   paddingTop: "2px",
@@ -1226,14 +1316,14 @@ export default function Home() {
               >
                 {items.map((item, i) => (
                   <span key={item}>
-                    <span style={{ color: "#aaaaaa", fontSize: "15px" }}>
+                    <span style={{ color: "#aaaaaa", fontSize: "14px" }}>
                       {item}
                     </span>
                     {i < items.length - 1 && (
                       <span
                         style={{
                           color: "#555555",
-                          fontSize: "15px",
+                          fontSize: "14px",
                           margin: "0 10px",
                         }}
                       >
@@ -1256,7 +1346,7 @@ export default function Home() {
         style={{
           background: "#0f0f0f",
           borderTop: "0.5px solid rgba(255,255,255,0.06)",
-          padding: "80px clamp(20px, 5vw, 80px)",
+          padding: "80px clamp(24px, 5vw, 80px)",
           opacity: 0,
           transform: "translateY(20px)",
           transition: "opacity 0.6s ease, transform 0.6s ease",
@@ -1274,35 +1364,20 @@ export default function Home() {
           >
             Certifications
           </p>
-          <div
-            style={{
-              borderTop: "0.5px solid rgba(255,255,255,0.05)",
-            }}
-          >
+          <div style={{ borderTop: "0.5px solid rgba(255,255,255,0.05)" }}>
             {certifications.map((cert) => (
-              <div
-                key={cert.name}
-                className="cert-row"
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "110px 1fr auto",
-                  gap: "20px",
-                  padding: "20px 0",
-                  borderBottom: "0.5px solid rgba(255,255,255,0.05)",
-                  alignItems: "center",
-                }}
-              >
+              <div key={cert.name} className="cert-row">
                 <span
                   style={{
                     color: "#aaaaaa",
-                    fontSize: "15px",
+                    fontSize: "12px",
                     letterSpacing: "2px",
                     textTransform: "uppercase",
                   }}
                 >
                   {cert.issuer}
                 </span>
-                <span style={{ color: "#cccccc", fontSize: "15px" }}>
+                <span style={{ color: "#cccccc", fontSize: "14px" }}>
                   {cert.name}
                 </span>
                 <span className="cert-date" style={{ color: "#777777", fontSize: "14px" }}>
@@ -1320,7 +1395,7 @@ export default function Home() {
         className="contact-section"
         ref={contactRef}
         style={{
-          padding: "100px clamp(20px, 5vw, 80px)",
+          padding: "100px clamp(24px, 5vw, 80px)",
           textAlign: "center",
           opacity: 0,
           transform: "translateY(20px)",
@@ -1389,15 +1464,7 @@ export default function Home() {
           </p>
 
           {/* Work With Me */}
-          <div
-            className="contact-cards"
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr 1fr",
-              gap: "12px",
-              marginBottom: "40px",
-            }}
-          >
+          <div className="contact-cards">
             {[
               {
                 title: "Full-Time Roles",
@@ -1434,7 +1501,7 @@ export default function Home() {
                 <p
                   style={{
                     color: "#999999",
-                    fontSize: "15px",
+                    fontSize: "13px",
                     lineHeight: 1.6,
                   }}
                 >
@@ -1445,18 +1512,11 @@ export default function Home() {
           </div>
 
           {/* Buttons */}
-          <div
-            className="contact-btns"
-            style={{
-              display: "flex",
-              gap: "12px",
-              justifyContent: "center",
-              marginBottom: "32px",
-              flexWrap: "wrap",
-            }}
-          >
+          <div className="contact-btns">
             <a
-              href="https://mail.google.com/mail/?view=cm&to=shreyansh.kanoongo@gmail.com" target="_blank" rel="noopener noreferrer"
+              href="https://mail.google.com/mail/?view=cm&to=shreyansh.kanoongo@gmail.com"
+              target="_blank"
+              rel="noopener noreferrer"
               style={{
                 background: "#ffffff",
                 color: "#0a0a0a",
@@ -1492,13 +1552,11 @@ export default function Home() {
                 display: "inline-block",
               }}
               onMouseEnter={(e) => {
-                (e.target as HTMLElement).style.borderColor =
-                  "rgba(255,255,255,0.3)";
+                (e.target as HTMLElement).style.borderColor = "rgba(255,255,255,0.3)";
                 (e.target as HTMLElement).style.color = "#cccccc";
               }}
               onMouseLeave={(e) => {
-                (e.target as HTMLElement).style.borderColor =
-                  "rgba(255,255,255,0.15)";
+                (e.target as HTMLElement).style.borderColor = "rgba(255,255,255,0.15)";
                 (e.target as HTMLElement).style.color = "#cccccc";
               }}
             >
@@ -1511,17 +1569,8 @@ export default function Home() {
             +91-7357182862
           </p>
 
-          {/* Social links with icons */}
-          <div
-            className="social-links"
-            style={{
-              display: "flex",
-              gap: "10px",
-              justifyContent: "center",
-              flexWrap: "wrap",
-              marginBottom: "16px",
-            }}
-          >
+          {/* Social links */}
+          <div className="social-links">
             {[
               { label: "LinkedIn", href: "https://linkedin.com/in/shreyansh-kanoongo2005", icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg> },
               { label: "Instagram", href: "https://instagram.com/_shreyanshh._", icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg> },
@@ -1567,22 +1616,20 @@ export default function Home() {
 
       {/* ── FOOTER ── */}
       <footer
-        className="footer"
         style={{
           borderTop: "0.5px solid rgba(255,255,255,0.06)",
-          padding: "24px clamp(20px, 5vw, 80px)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
+          padding: "24px clamp(24px, 5vw, 80px)",
           background: "#0a0a0a",
         }}
       >
-        <span style={{ color: "#555555", fontSize: "13px" }}>
-          © 2026 Shreyansh Kanoongo
-        </span>
-        <span style={{ color: "#444444", fontSize: "12px", letterSpacing: "1px" }}>
-          Built by Shreyansh
-        </span>
+        <div className="footer-inner">
+          <span style={{ color: "#555555", fontSize: "13px" }}>
+            © 2026 Shreyansh Kanoongo
+          </span>
+          <span style={{ color: "#444444", fontSize: "12px", letterSpacing: "1px" }}>
+            Built by Shreyansh
+          </span>
+        </div>
       </footer>
     </main>
   );
