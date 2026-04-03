@@ -325,6 +325,14 @@ export default function Home() {
           gap: 60px;
           align-items: start;
         }
+        .about-info-row {
+          display: grid;
+          grid-template-columns: 110px 1fr;
+          gap: 20px;
+          padding: 16px 0;
+          border-bottom: 0.5px solid rgba(255,255,255,0.05);
+          align-items: start;
+        }
 
         /* ── PROJECTS ── */
         .project-header-row {
@@ -369,9 +377,13 @@ export default function Home() {
           padding: 28px 24px;
           transition: background 0.2s ease;
           cursor: default;
+          border-bottom: none;
+          border-right: none;
         }
-        .service-border-right { border-right: 0.5px solid rgba(255,255,255,0.06); }
-        .service-border-bottom { border-bottom: 0.5px solid rgba(255,255,255,0.06); }
+        /* Desktop: right borders on all except every 4th */
+        .service-cell:not(:nth-child(4n)) { border-right: 0.5px solid rgba(255,255,255,0.06); }
+        /* Desktop: bottom borders on top row */
+        .service-cell:nth-child(-n+4) { border-bottom: 0.5px solid rgba(255,255,255,0.06); }
 
         /* ── SKILLS ── */
         .skills-row {
@@ -393,6 +405,9 @@ export default function Home() {
           align-items: center;
         }
         .cert-date { display: block; }
+
+        /* ── HERO BUTTONS ── */
+        .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
 
         /* ── CONTACT ── */
         .contact-cards {
@@ -447,9 +462,14 @@ export default function Home() {
           }
           .hero-stats { grid-template-columns: 1fr 1fr 1fr; }
 
+          /* HERO BUTTONS */
+          .hero-btns { flex-direction: column; align-items: stretch; }
+          .hero-btns a { text-align: center; width: 100%; }
+
           /* ABOUT */
           .about-section { padding: 60px 24px !important; }
           .about-grid { grid-template-columns: 1fr; gap: 32px; }
+          .about-info-row { grid-template-columns: 90px 1fr; gap: 12px; }
 
           /* PROJECTS */
           .projects-section { padding: 60px 24px !important; }
@@ -469,9 +489,10 @@ export default function Home() {
 
           /* SERVICES */
           .services-section { padding: 60px 24px !important; }
-          .services-grid { grid-template-columns: 1fr 1fr; }
-          .service-border-right { border-right: none; }
-          .service-border-bottom { border-bottom: 0.5px solid rgba(255,255,255,0.06); }
+          .services-grid { grid-template-columns: 1fr; }
+          .service-cell { padding: 20px 16px; border-right: none !important; }
+          .service-cell:nth-child(-n+4) { border-bottom: none; }
+          .service-cell:not(:last-child) { border-bottom: 0.5px solid rgba(255,255,255,0.06) !important; }
 
           /* SKILLS */
           .skills-section { padding: 60px 24px !important; }
@@ -662,7 +683,7 @@ export default function Home() {
               Systems that execute.
             </p>
 
-            <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
+            <div className="hero-btns" style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
               <a
                 href="#projects"
                 style={{
@@ -889,17 +910,7 @@ export default function Home() {
                 { label: "Open to", value: "Full-time · Freelance · Contract" },
                 { label: "Education", value: "BBA · Manipal University Jaipur" },
               ].map((item) => (
-                <div
-                  key={item.label}
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "110px 1fr",
-                    gap: "20px",
-                    padding: "16px 0",
-                    borderBottom: "0.5px solid rgba(255,255,255,0.05)",
-                    alignItems: "start",
-                  }}
-                >
+                <div key={item.label} className="about-info-row">
                   <span
                     style={{
                       color: "#aaaaaa",
@@ -1192,22 +1203,13 @@ export default function Home() {
           </h2>
 
           <div className="services-grid">
-            {services.map((service, i) => {
-              const isLastInRow4 = (i + 1) % 4 === 0;
-              const isLastInRow2 = (i + 1) % 2 === 0;
-              const isInTopHalf = i < 4;
-              return (
+            {services.map((service, i) => (
                 <div
                   key={i}
-                  className={[
-                    "service-cell",
-                    !isLastInRow4 ? "service-border-right" : "",
-                    isInTopHalf ? "service-border-bottom" : "",
-                  ].join(" ")}
+                  className="service-cell"
                   style={{
-                    /* border-right on 2-col layout handled via media query override below */
-                    borderRight: !isLastInRow4 ? "0.5px solid rgba(255,255,255,0.06)" : "none",
-                    borderBottom: isInTopHalf ? "0.5px solid rgba(255,255,255,0.06)" : "none",
+                    borderBottom: i < services.length - 1 ? "0.5px solid rgba(255,255,255,0.06)" : "none",
+                    borderRight: "none",
                   }}
                   onMouseEnter={(e) =>
                     ((e.currentTarget as HTMLElement).style.background =
@@ -1249,8 +1251,7 @@ export default function Home() {
                     {service.description}
                   </p>
                 </div>
-              );
-            })}
+            ))}
           </div>
         </div>
       </section>
