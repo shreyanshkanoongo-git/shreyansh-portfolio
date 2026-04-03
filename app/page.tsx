@@ -289,6 +289,41 @@ export default function Home() {
         minHeight: "100vh",
       }}
     >
+      <style>{`
+        @media (max-width: 768px) {
+          .nav-links { display: none !important; }
+          .hero-section { padding: 100px 24px 60px !important; min-height: auto !important; }
+          .hero-grid { display: flex !important; flex-direction: column-reverse !important; gap: 32px !important; }
+          .hero-photo-col { display: flex !important; flex-direction: column !important; align-items: center !important; }
+          .hero-photo-wrap { width: 160px !important; height: 160px !important; aspect-ratio: 1/1 !important; border-radius: 50% !important; }
+          .hero-h1 { font-size: 36px !important; letter-spacing: -1px !important; }
+          .about-section { padding: 60px 24px !important; }
+          .about-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+          .projects-section { padding: 60px 24px !important; }
+          .project-header-row { display: none !important; }
+          .project-row-grid { grid-template-columns: 36px 1fr 20px !important; gap: 8px !important; }
+          .project-col-cat { display: none !important; }
+          .project-col-year { display: none !important; }
+          .project-expanded-grid { grid-template-columns: 1fr !important; gap: 20px !important; }
+          .services-section { padding: 60px 24px !important; }
+          .services-grid { grid-template-columns: 1fr 1fr !important; }
+          .skills-section { padding: 60px 24px !important; }
+          .skills-row { grid-template-columns: 1fr !important; gap: 8px !important; }
+          .cert-section { padding: 60px 24px !important; }
+          .cert-row { grid-template-columns: 80px 1fr !important; gap: 10px !important; }
+          .cert-date { display: none !important; }
+          .contact-section { padding: 60px 24px !important; }
+          .contact-cards { grid-template-columns: 1fr !important; gap: 10px !important; }
+          .contact-btns { flex-direction: column !important; align-items: stretch !important; }
+          .contact-btns a { text-align: center !important; justify-content: center !important; }
+          .social-links { gap: 8px !important; }
+          .footer { padding: 20px 24px !important; flex-direction: column !important; gap: 8px !important; text-align: center !important; }
+        }
+        @media (max-width: 480px) {
+          .hero-h1 { font-size: 28px !important; }
+          .services-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
       {/* ── NAVIGATION ── */}
       <nav
         style={{
@@ -314,7 +349,7 @@ export default function Home() {
         <span style={{ color: "#f2f2f2", fontSize: "15px", fontWeight: 400 }}>
           Shreyansh Kanoongo
         </span>
-        <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
+        <div className="nav-links" style={{ display: "flex", alignItems: "center", gap: "24px" }}>
           {["About", "Projects", "Skills", "Contact"].map((item) => (
             <a
               key={item}
@@ -366,23 +401,22 @@ export default function Home() {
       {/* ── HERO ── */}
       <section
         id="home"
+        className="hero-section"
         style={{
           minHeight: "100vh",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          padding: "120px clamp(20px, 5vw, 80px) 80px",
+          padding: "120px 80px 80px",
           maxWidth: "1200px",
           margin: "0 auto",
-          width: "100%",
-          boxSizing: "border-box",
         }}
       >
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "1fr clamp(180px, 22vw, 280px)",
-            gap: "clamp(20px, 4vw, 80px)",
+            gridTemplateColumns: "1fr 280px",
+            gap: "80px",
             alignItems: "center",
           }}
         >
@@ -390,12 +424,11 @@ export default function Home() {
           <div>
             <p
               style={{
-                color: "#666666",
-                fontSize: "11px",
-                letterSpacing: "3px",
+                color: "#aaaaaa",
+                fontSize: "15px",
+                letterSpacing: "4px",
                 textTransform: "uppercase",
                 marginBottom: "16px",
-                whiteSpace: "nowrap",
               }}
             >
               AI Automation &amp; Systems Developer · Jaipur, India
@@ -428,6 +461,7 @@ export default function Home() {
             </div>
 
             <h1
+              className="hero-h1"
               style={{
                 fontSize: "clamp(42px, 5vw, 66px)",
                 fontWeight: 300,
@@ -514,8 +548,9 @@ export default function Home() {
           </div>
 
           {/* Right: Photo + Stats */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+          <div className="hero-photo-col" style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
             <div
+              className="hero-photo-wrap"
               style={{
                 width: "100%",
                 aspectRatio: "4/5",
@@ -596,6 +631,7 @@ export default function Home() {
       {/* ── ABOUT ── */}
       <section
         id="about"
+        className="about-section"
         ref={aboutRef}
         style={{
           background: "#0f0f0f",
@@ -653,6 +689,7 @@ export default function Home() {
           </div>
 
           <div
+            className="about-grid"
             style={{
               display: "grid",
               gridTemplateColumns: "1fr 1fr",
@@ -726,16 +763,15 @@ export default function Home() {
                 >
                   <span
                     style={{
-                      color: "#666666",
-                      fontSize: "11px",
+                      color: "#aaaaaa",
+                      fontSize: "15px",
                       textTransform: "uppercase",
                       letterSpacing: "2px",
-                      paddingTop: "2px",
                     }}
                   >
                     {item.label}
                   </span>
-                  <span style={{ color: "#aaaaaa", fontSize: "14px", whiteSpace: "nowrap" }}>
+                  <span style={{ color: "#888888", fontSize: "15px" }}>
                     {item.value}
                   </span>
                 </div>
@@ -748,6 +784,7 @@ export default function Home() {
       {/* ── PROJECTS ── */}
       <section
         id="projects"
+        className="projects-section"
         ref={projectsRef}
         style={{
           padding: "80px clamp(20px, 5vw, 80px)",
@@ -794,6 +831,7 @@ export default function Home() {
 
         {/* Header row */}
         <div
+          className="project-header-row"
           style={{
             display: "grid",
             gridTemplateColumns: "48px 1fr 160px 60px 24px",
@@ -1008,6 +1046,7 @@ export default function Home() {
       {/* ── SERVICES ── */}
       <section
         id="services"
+        className="services-section"
         style={{
           background: "#0f0f0f",
           borderTop: "0.5px solid rgba(255,255,255,0.06)",
@@ -1040,6 +1079,7 @@ export default function Home() {
           </h2>
 
           <div
+            className="services-grid"
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(4, 1fr)",
@@ -1113,6 +1153,7 @@ export default function Home() {
       {/* ── SKILLS ── */}
       <section
         id="skills"
+        className="skills-section"
         ref={skillsRef}
         style={{
           padding: "80px clamp(20px, 5vw, 80px)",
@@ -1154,6 +1195,7 @@ export default function Home() {
           {Object.entries(skills).map(([category, items]) => (
             <div
               key={category}
+              className="skills-row"
               style={{
                 display: "grid",
                 gridTemplateColumns: "160px 1fr",
@@ -1209,6 +1251,7 @@ export default function Home() {
       {/* ── CERTIFICATIONS ── */}
       <section
         id="certifications"
+        className="cert-section"
         ref={certRef}
         style={{
           background: "#0f0f0f",
@@ -1239,6 +1282,7 @@ export default function Home() {
             {certifications.map((cert) => (
               <div
                 key={cert.name}
+                className="cert-row"
                 style={{
                   display: "grid",
                   gridTemplateColumns: "110px 1fr auto",
@@ -1261,7 +1305,7 @@ export default function Home() {
                 <span style={{ color: "#cccccc", fontSize: "15px" }}>
                   {cert.name}
                 </span>
-                <span style={{ color: "#777777", fontSize: "14px" }}>
+                <span className="cert-date" style={{ color: "#777777", fontSize: "14px" }}>
                   {cert.date}
                 </span>
               </div>
@@ -1273,6 +1317,7 @@ export default function Home() {
       {/* ── CONTACT ── */}
       <section
         id="contact"
+        className="contact-section"
         ref={contactRef}
         style={{
           padding: "100px clamp(20px, 5vw, 80px)",
@@ -1345,6 +1390,7 @@ export default function Home() {
 
           {/* Work With Me */}
           <div
+            className="contact-cards"
             style={{
               display: "grid",
               gridTemplateColumns: "1fr 1fr 1fr",
@@ -1400,6 +1446,7 @@ export default function Home() {
 
           {/* Buttons */}
           <div
+            className="contact-btns"
             style={{
               display: "flex",
               gap: "12px",
@@ -1409,9 +1456,7 @@ export default function Home() {
             }}
           >
             <a
-              href="https://mail.google.com/mail/?view=cm&to=shreyansh.kanoongo@gmail.com"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="https://mail.google.com/mail/?view=cm&to=shreyansh.kanoongo@gmail.com" target="_blank" rel="noopener noreferrer"
               style={{
                 background: "#ffffff",
                 color: "#0a0a0a",
@@ -1468,6 +1513,7 @@ export default function Home() {
 
           {/* Social links with icons */}
           <div
+            className="social-links"
             style={{
               display: "flex",
               gap: "10px",
@@ -1477,64 +1523,17 @@ export default function Home() {
             }}
           >
             {[
-              {
-                label: "LinkedIn",
-                href: "https://linkedin.com/in/shreyansh-kanoongo2005",
-                icon: (
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-                    <rect x="2" y="9" width="4" height="12"/>
-                    <circle cx="4" cy="4" r="2"/>
-                  </svg>
-                ),
-              },
-              {
-                label: "Instagram",
-                href: "https://instagram.com/_shreyanshh._",
-                icon: (
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-                  </svg>
-                ),
-              },
-              {
-                label: "GitHub",
-                href: "https://github.com/shreyanshkanoongo-git",
-                icon: (
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
-                  </svg>
-                ),
-              },
-              {
-                label: "Email",
-                href: "https://mail.google.com/mail/?view=cm&to=shreyansh.kanoongo@gmail.com",
-                icon: (
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                    <polyline points="22,6 12,13 2,6"/>
-                  </svg>
-                ),
-              },
-              {
-                label: "Download CV",
-                href: "/shreyansh-cv.pdf",
-                icon: (
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                    <polyline points="7 10 12 15 17 10"/>
-                    <line x1="12" y1="15" x2="12" y2="3"/>
-                  </svg>
-                ),
-              },
+              { label: "LinkedIn", href: "https://linkedin.com/in/shreyansh-kanoongo2005", icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg> },
+              { label: "Instagram", href: "https://instagram.com/_shreyanshh._", icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg> },
+              { label: "GitHub", href: "https://github.com/shreyanshkanoongo-git", icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg> },
+              { label: "Email", href: "https://mail.google.com/mail/?view=cm&to=shreyansh.kanoongo@gmail.com", icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> },
+              { label: "Download CV", href: "/shreyansh-cv.pdf", icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> },
             ].map((link) => (
               <a
                 key={link.label}
                 href={link.href}
-                target={link.href.startsWith("mailto") || link.href.startsWith("/") ? undefined : "_blank"}
-                rel={link.href.startsWith("mailto") || link.href.startsWith("/") ? undefined : "noopener noreferrer"}
+                target={link.href.startsWith("/") ? undefined : "_blank"}
+                rel={link.href.startsWith("/") ? undefined : "noopener noreferrer"}
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
@@ -1568,6 +1567,7 @@ export default function Home() {
 
       {/* ── FOOTER ── */}
       <footer
+        className="footer"
         style={{
           borderTop: "0.5px solid rgba(255,255,255,0.06)",
           padding: "24px clamp(20px, 5vw, 80px)",
